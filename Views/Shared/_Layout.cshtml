@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - WebSeoSoft</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("styles", required: false)
+    <link href="~/Content/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/css/social-buttons.css" rel="stylesheet" />
+    <style>
+        .menu-frontent {
+                position: relative;
+                margin-top: 25px;
+        }
+        .menu-frontent a {
+            color: black;
+        }
+
+        .menu-frontent a:hover {
+            color: red !important;
+        }
+
+        .menu-frontent a.active {
+            color: #DD0000;
+            
+        }
+        
+        .footer {
+            background-color: #333333;
+        }
+        .footer-title {
+            color: #ec4137;
+            padding-top: 35px;
+            padding-bottom: 10px;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .footer-text {
+            color: #a9a9a9;
+            font-size: 14px;
+        }
+
+        .footer-text 
+
+        .col-footer {
+            display: block;
+            height: 270px;
+            min-height: 270px
+        }
+
+        a.footer-link {
+            text-decoration: none;
+            color: #de4a3c;
+        }
+
+        a.footer-link:hover {
+            color: red !important;
+        }
+        .divider-vertical {
+            color: #de4a3c;
+        }
+
+        .link-hover-color {
+            color: #ff9093;
+        }
+
+        .light-text {
+            font-weight: 300;
+            color: #a2a2a4;
+            
+        }
+
+        .text-left {
+            text-align: left !important;
+        }
+        .section-heading {
+         font-size: 18px;
+         font-weight: 500;        
+        }
+        .section-description {
+            padding-bottom: 10px;
+        }
+    </style>
+</head>
+<body style="padding-top: 0px; background-color: #f6f6f6;">
+
+@Html.Partial("_Header")
+
+<div class="container body-content" style="height: 800px">
+    @RenderBody()
+    
+</div>
+<footer>
+    @Html.Partial("_Footer")
+</footer>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@RenderSection("scripts", required: false)
+</body>
+</html>

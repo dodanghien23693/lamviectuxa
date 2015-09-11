@@ -1,0 +1,448 @@
+﻿@model WebSoftSeo.Models.EditProfileViewModel
+@{
+    Layout = "~/Views/Shared/Admin/_LayoutFreelancer.cshtml";
+    ViewBag.Title = "Manage";
+}
+
+@{
+    WebSoftSeo.Models.WorkExperience WorkExperience = new WebSoftSeo.Models.WorkExperience();
+}
+@section styles{
+    <link href="~/Scripts/Plugins/Choosen/chosen.min.css" rel="stylesheet" />
+    <style>
+        .menu-frontent {
+            position: relative;
+            margin-top: 25px;
+        }
+
+            .menu-frontent a {
+                color: black;
+            }
+
+                .menu-frontent a:hover {
+                    color: red !important;
+                }
+
+                .menu-frontent a.active {
+                    color: #DD0000;
+                }
+
+        .footer {
+            background-color: #333333;
+        }
+
+        .footer-title {
+            color: #ec4137;
+            padding-top: 35px;
+            padding-bottom: 10px;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .footer-text {
+            color: #a9a9a9;
+            font-size: 14px;
+        }
+
+            .footer-text .col-footer {
+                display: block;
+                height: 270px;
+                min-height: 270px;
+            }
+
+        a.footer-link {
+            text-decoration: none;
+            color: #de4a3c;
+        }
+
+            a.footer-link:hover {
+                color: red !important;
+            }
+
+        .divider-vertical {
+            color: #de4a3c;
+        }
+
+        .link-hover-color {
+            color: #ff9093;
+        }
+
+        .light-text {
+            font-weight: 300;
+            color: #a2a2a4;
+        }
+
+        .text-left {
+            text-align: left !important;
+        }
+
+        .section-heading {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .section-description {
+            padding-bottom: 10px;
+        }
+
+        .modal-title {
+            font-weight: bold;
+            color: white;
+        }
+
+        .modal-header {
+            min-height: 16.428571429px;
+            padding: 10px 15px;
+            border-bottom: 1px solid #e5e5e5;
+            background-color: #e3453c;
+        }
+
+        .modal-content {
+            border-radius: 0;
+        }
+
+        .modal-footer {
+            border: 0;
+        }
+
+        /*.modal-dialog {
+            right: auto;
+            left: 50%;
+            width: 600px;
+            padding-top: 200px;
+            padding-bottom: 30px;
+        }*/
+        input, textarea {
+            max-width: 100%;
+        }
+    </style>
+}
+
+@*@section breadcrumbs{
+    <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li><a href="/Manage/Profile">Manager Freelancer</a></li>
+        <li class="active">Edit Profile</li>
+    </ol>
+}*@
+
+@section menus{
+    @Html.Partial("Admin/_MenuAccountInfo")
+
+}
+
+<div class="row">
+
+    <!-- Form info -->
+    <div class="col-sm-12">
+        <div class="box-border">
+            @using (Html.BeginForm("EditProfile", "Manage", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="info-group">
+                    <div class="text-title">Introduce Yourself</div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.FirstName, new { @class = "col-sm-3 control-label  text-left" })
+                        <div class="col-sm-9">
+
+                            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control  btn-block" })
+                            @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LastName, new { @class = "col-sm-3 control-label  text-left" })
+                        <div class="col-sm-9">
+
+                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control  btn-block" })
+                            @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Birthday, new { @class = "col-sm-3 control-label text-left" })
+                        <div class="col-sm-9">
+                           
+                            <input type="date" name="Birthday" id="Birthday" value="@WebSoftSeo.Library.Ultilites.GetStringDate(Model.Birthday)" class="form-control input-sm" />
+                            @*@Html.Editor(m => m.Birthday, new { @class = "form-control" })*@
+                            @Html.ValidationMessageFor(m => m.Birthday, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="info-group">
+                    <div class="text-title">Contact Info</div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Address, new { @class = "col-sm-3 control-label text-left" })
+                        <div class="col-sm-9">
+                            @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-sm-3 control-label text-left" })
+                        <div class="col-sm-9">
+                            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Email, new { @class = "col-sm-3 control-label text-left" })
+                        <div class="col-sm-9">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Skype, new { @class = "col-sm-3 control-label text-left" })
+                        <div class="col-sm-9">
+                            @Html.TextBoxFor(m => m.Skype, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Skype, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-3 col-sm-9">
+                            <input type="submit" value="Save" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+                
+               
+             
+
+                @*<div class="modal fade" id="WorkExperienceModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="ModalLabel">Add Work Experience</h4>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div action="" id="WorkExperience" class="form-horizontal" method="post" novalidate="novalidate">
+                                        <div class="row">
+
+                                            <input id="Id" name="Id" type="hidden" value="" />
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label text-left" for="WorkPlacement">Work Placement</label>
+                                                <div class="col-sm-8">
+                                                    <input class="form-control input-sm" id="WorkPlacement" name="WorkPlacement" type="text" value="" minlength="2" required>
+                                                    <span class="field-validation-valid text-danger" data-valmsg-for="WorkPlacement" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label text-left" for="Address">Address</label>
+                                                <div class="col-sm-8">
+                                                    <input class="form-control input-sm" id="Address" name="Address" type="text" value="" required>
+                                                    <span class="field-validation-valid text-danger" data-valmsg-for="Address" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label text-left" for="Address">Datetime</label>
+                                                <div class="col-sm-8">
+                                                    <input class="form-control input-sm" id="Datetime" name="Datetime" type="date" value="" required>
+                                                    <span class="field-validation-valid text-danger" data-valmsg-for="Datetime" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+
+                                                <label class="col-sm-4 control-label text-left" for="Company">Company</label>
+                                                <div class="col-sm-8">
+
+                                                    <input class="form-control input-sm" id="Company" name="Company" type="text" value="" required>
+                                                    <span class="field-validation-valid text-danger" data-valmsg-for="Company" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label text-left" for="Description">Description</label>
+                                                <div class="col-sm-8">
+                                                    <textarea class="form-control input-sm" id="Description" name="Description" value="" required></textarea>
+                                                    <span class="field-validation-valid text-danger" data-valmsg-for="Description" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" id="submitWorkExperience" class="btn btn-sm btn-default">Add</button>
+                                        <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+
+            }
+        </div>
+    </div>
+
+    
+
+</div>
+
+
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/Plugins/Choosen/chosen.jquery.min.js"></script>
+
+    @*<script src="~/Scripts/Plugins/DropDownDate/jquery.date-dropdowns.min.js"></script>*@
+    <script>
+
+        $(document).ready(function () {
+           
+            @*var listString = '@string.Join(",",Model.Skills)';
+            var listSkill = listString.split(",");
+
+            $.each($("select#Skills option"), function (index, e) {
+                if ($.inArray($(e).val(), listSkill)>=0) {
+                    $(e).prop('selected', true);
+                }
+            });
+            $("#Skills").chosen({ max_selected_options: 5 });*@
+
+
+
+            //$("#AddWorkExperience").click(function (e) {
+            //    $("#WorkExperienceModal #ModalLabel").html("Add Work Experience");
+            //    $("#WorkExperienceModal #submitWorkExperience").html("Add");
+
+            //    $("#WorkExperienceModal #WorkPlacement").val("");
+            //    $("#WorkExperienceModal #Address").val("");
+            //    $("#WorkExperienceModal #Datetime").val(Date.now());
+            //    $("#WorkExperienceModal #Company").val("");
+            //    $("#WorkExperienceModal #Description").val("");
+
+            //    $("#WorkExperienceModal").modal("show");
+            //});
+
+
+            //$("#submitWorkExperience").click(function (e) {
+            //    e.preventDefault();
+            //    e.stopPropagation();
+            //    var workExperience = {};
+            //    workExperience.WorkPlacement = $("#WorkExperienceModal #WorkPlacement").val();
+            //    workExperience.Address = $("#WorkExperienceModal #Address").val();
+            //    workExperience.Datetime = $("#WorkExperienceModal #Datetime").val();
+            //    workExperience.Company = $("#WorkExperienceModal #Company").val();
+            //    workExperience.Description = $("#WorkExperienceModal #Description").val();
+
+
+            //    if ($(this).html() == "Add") {
+
+            //        data = { 'workExperience': workExperience }
+            //        // alert(JSON.stringify(data));
+            //        $.post("/WorkExperience/Create", data).done(function (data) {
+
+            //            $(".work-experience-group").first().append('<div class="row">'
+            //                + '<div class="col-sm-6">'
+            //                            + '<div class="work-experience-item">'
+            //                               + ' <div class="work-name">'
+            //                                 + workExperience.WorkPlacement
+            //                                + '</div>'
+            //                                + '<div class="work-placement">'
+            //                                 + workExperience.Address
+            //                                + '</div>'
+            //                                + '<div class="work-address">'
+            //                                  + workExperience.Company
+            //                                + '</div>'
+            //                            + '</div>'
+            //                        + '</div>'
+            //                        + '<div class="col-sm-3">'
+            //                          + '  <input id="Edit"  type="button" data-id="' + data.Id + '" value="Edit" />'
+            //                            + '<input id="Delete" type="button" data-id="' + data.Id + '" value="Delete" />'
+            //                        + '</div></div>');
+
+            //            $('#WorkExperienceModal').modal('hide');
+
+            //        });
+
+            //    }
+            //    else if ($(this).html() == "Update") {
+
+            //        var id = $("#WorkExperienceModal #Id").val();
+            //        data = { 'id': id, 'workExperience': workExperience }
+
+            //        $.post("/WorkExperience/Edit", data).done(function (data) {
+            //            if (data.state == "success") {
+            //                var item = $(".work-experience-group #Edit[data-id=" + id + "]").closest(".work-experience-group").first();
+            //                $(item).find(".work-placement").html(workExperience.WorkPlacement);
+            //                $(item).find(".work-address").html(workExperience.Address);
+            //                $(item).find(".work-company").html(workExperience.Company);
+
+            //                $('#WorkExperienceModal').modal('hide');
+            //            }
+            //            else {
+            //                alert("error update work experience");
+            //            }
+
+            //        });
+
+            //    }
+
+            //});
+
+            //$(".work-experience-group").delegate("#Delete", "click", function (e) {
+            //    var id = $(this).attr("data-id");
+            //    $.post("/WorkExperience/Delete", { 'id': id }).done(function (data) {
+            //        if (data.state == "success") {
+            //            $(".work-experience-group #Delete[data-id=" + id + "]").closest(".row").remove();
+            //        }
+            //        else {
+            //            alert("Delete error");
+            //        }
+            //    });
+            //});
+
+
+            //$(".work-experience-group").delegate("#Edit", "click", function (e) {
+
+            //    var id = $(this).attr("data-id");
+
+            //    $.get("/WorkExperience/Edit", { 'id': id }).done(function (data) {
+
+            //        //var datetime = Date.parse(data.Datetime);
+            //        //var date = eval(data.Datetime.replace(/\//g, ""));
+            //        var date = Date.parse(eval(data.Datetime.replace(/\//g, "")));
+            //        var date = new Date(date);
+
+            //        var dd = date.getDate();
+            //        var mm = date.getMonth() + 1; //January is 0!
+            //        if (dd < 10) { dd = '0' + dd }
+            //        if (mm < 10) { mm = '0' + mm }
+
+            //        var yyyy = date.getFullYear();
+            //        var d = yyyy + "-" + mm + "-" + dd;
+
+            //        $("#WorkExperienceModal #Id").val(id);
+            //        $("#WorkExperienceModal #WorkPlacement").val(data.WorkPlacement);
+            //        $("#WorkExperienceModal #Address").val(data.Address);
+            //        $("#WorkExperienceModal #Datetime").val(d);
+            //        $("#WorkExperienceModal #Company").val(data.Company);
+            //        $("#WorkExperienceModal #Description").val(data.Description);
+
+            //        $("#WorkExperienceModal #ModalLabel").html("Update Work Experience");
+            //        $("#WorkExperienceModal #submitWorkExperience").html("Update");
+            //        $("#WorkExperienceModal").modal("show");
+            //    });
+            //});
+
+        });
+
+
+    </script>
+}
+
+
+
+
+

@@ -1,0 +1,19 @@
+﻿@{
+    WebSoftSeo.Models.ApplicationUser User = WebSoftSeo.Controllers.SystemInfo.GetCurrentUser();
+}
+<span class="row" style="height:80px;">
+    <div class="col-sm-2">
+        <img style="height:100px" class="img-responsive" src="@User.ImageUrl.Substring(1)">
+    </div>
+    <div class="col-sm-2">
+        <div>@User.FirstName @User.LastName</div>
+        <div>@User.WorkPlacement</div>
+        <div>@User.Address</div>
+    </div>
+
+    <div class="col-sm-3">
+        <div class="rating">xxxxx</div>
+        <div class="birthday-info">Birthday: @User.Birthday.ToShortDateString()</div>
+        <div class="join-date">Join Date: @User.CreatedOn</div>
+    </div>
+</span>

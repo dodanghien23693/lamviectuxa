@@ -1,0 +1,51 @@
+﻿<div class="navbar navbar-inverse " style="margin-bottom: 0px">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="#"><span class="glyphicon glyphicon-phone " ></span> 0937 566 247</a>
+                </li>
+                <li>
+                    <a href="#"><span class="glyphicon glyphicon-envelope"></span> websoftseo.com@gmail.com</a>
+                </li>
+        </ul>
+            @Html.Partial("_LoginPartial")
+
+            
+        </div>
+    </div>
+</div>
+
+<div class="navbar navbar-static-top" style="box-shadow: 0px 2px 4px #DEDEDE;">
+    <div class="container">
+
+        <div class="navbar-header">
+            <div class="navbar-brand">
+                <img src="~/Content/Images/logo.png" style="padding-left: 15px" />
+            </div>
+
+        </div>
+        <div class="navbar-collapse collapse">
+
+            <ul class="nav navbar-nav navbar-right menu-frontent">
+                <li><a  href="#"><span class="glyphicon glyphicon-search"></span></a></li>
+                <li> @Html.ActionLink("HOME","Home","Home",new {@class="active"})</li>
+                <li> @Html.ActionLink("ABOUT", "About", "Home")</li>
+                <li> @Html.ActionLink("SERVICES", "Services", "Home")</li>
+                <li> @Html.ActionLink("BLOG", "Blog", "Home")</li>
+                <li> @Html.ActionLink("CONTACT", "Contact", "Home")</li>
+            </ul>
+
+        </div>
+
+        
+    </div>
+</div>
+

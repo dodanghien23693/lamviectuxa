@@ -1,0 +1,74 @@
+﻿@using WebSoftSeo.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+}
+
+<div class="row" style="padding-top: 30px">
+    <div class="col-sm-6" >
+        <h2 style="margin-top: 0px">Sign in to WebSeoSoft</h2>
+    </div>
+    <div class="col-sm-6" style="background-color: white; padding-left: 0px; padding-right: 0px;">
+        <div class="col-sm-7">
+            <div style="padding-top: 20px; font-size: 17px; font-weight: bold;">
+                Sign in to your account
+            </div>
+            <hr/>
+            <section id="loginForm">
+                @using (Html.BeginForm("Login", "Account", new {ReturnUrl = ViewBag.ReturnUrl}, FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Email, new {@class = "col-sm-4 control-label light-text text-left"})
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.Email, new {@class = "form-control input-sm"})
+                            @Html.ValidationMessageFor(m => m.Email, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password, new { @class = "col-sm-4 control-label light-text text-left" })
+                        <div class="col-sm-8">
+                            @Html.PasswordFor(m => m.Password, new {@class = "form-control input-sm"})
+                            @Html.ValidationMessageFor(m => m.Password, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-8">
+                            <div class="checkbox">
+                                @Html.CheckBoxFor(m => m.RememberMe)
+                                @Html.LabelFor(m => m.RememberMe)
+                            </div>
+                        </div>
+                    </div>*@
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-8">
+                            <input type="submit" value="Log in" class="btn btn-danger btn-block btn-sm"/>
+                            <p style="text-align: right; padding-top: 10px " >
+                                <span class="light-text">Forgot your</span> <a class="footer-link" href="/Account/ForgotPassword">password</a><span class="light-text">?</span>
+</p>
+                        </div>
+                    </div>
+                    //Enable this once you have account confirmation enabled for password reset functionality
+
+                }
+            </section>
+        </div>
+
+        <div class="col-sm-5">
+            <div style="padding-top: 20px; padding-bottom: 45px;">
+
+                @Html.ActionLink("Don't have an account? Sign Up!", "Register")
+
+            </div>
+            <section id="socialLoginForm">
+                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel {ReturnUrl = ViewBag.ReturnUrl})
+            </section>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

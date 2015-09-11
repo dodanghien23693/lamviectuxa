@@ -1,0 +1,158 @@
+﻿@model WebSoftSeo.Models.ApplicationUser
+@{
+    Layout = "~/Views/Shared/Admin/_LayoutFreelancer.cshtml";
+    ViewBag.Title = "Manage";
+}
+
+@section styles{
+    <style>
+        .content-block {
+            padding: 20px;
+        }
+
+        .text-title {
+            font-size: 18px;
+            font-weight: bold;
+            padding-bottom: 20px;
+        }
+
+        .info-item {
+            padding-bottom: 10px;
+        }
+
+            .info-item .info-name {
+                width: 200px;
+                display: inline-block;
+                text-anchor: start;
+            }
+
+        .info-name {
+            font-weight: bold;
+        }
+
+        .work-experience-group {
+            margin-left: 200px;
+        }
+
+            .work-experience-group .work-name {
+                font-weight: 550;
+            }
+
+        .info-group {
+            padding-bottom: 20px;
+        }
+
+        .work-experience-item {
+            padding-bottom: 10px;
+        }
+
+            .work-experience-item .work-placement {
+                font-size: 12px;
+                color: #808080;
+            }
+
+            .work-experience-item .work-address {
+                font-size: 13px;
+                color: #808080;
+            }
+    </style>
+
+}
+
+@section breadcrumbs{
+    <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li><a href="/Manage/Profile">Manager Freelancer</a></li>
+        <li class="active">Details Freelancer</li>
+    </ol>
+}
+
+<div class="content-block">
+    <div class="info-group">
+        <div class="text-title">Introduce Yourself</div>
+        <div>
+            @Model.IntroduceYourself
+        </div>
+    </div>
+    <div class="info-group">
+
+        <div class="text-title">Contact Info</div>
+
+        <div class="info-item">
+            <span class="info-name">Address</span>
+            <span class="info-value">@Model.Address</span>
+        </div>
+        <div class="info-item">
+            <span class="info-name">Phone Number</span>
+            <span class="info-value">@Model.PhoneNumber</span>
+        </div>
+
+        <div class="info-item">
+            <span class="info-name">Email</span>
+            <span class="info-value">support@gmail.com</span>
+        </div>
+
+        <div class="info-item">
+            <span class="info-name">Skype</span>
+            <span class="info-value">@Model.Email</span>
+        </div>
+    </div>
+
+    <div class="info-group">
+        <div class="text-title">Skills and Work Experience</div>
+
+        <div class="info-item">
+            <span class="info-name">Skills</span>
+            <span class="info-value">@string.Join(",",@Model.Skills.Select(s=>s.Name))</span>
+        </div>
+        <div class="info-item">
+            <span class="info-name">Work Experience</span>
+            <span class="info-value">
+                <div class="work-experience-group">
+                    @foreach (var workExperience in Model.WorkExperiences)
+                    {
+                        <div class="work-experience-item">
+                            <div class="work-name">
+                                @workExperience.WorkPlacement
+                            </div>
+                            <div class="work-placement">
+                                @workExperience.Address
+                            </div>
+                            <div class="work-address">
+                                @workExperience.Company
+                            </div>
+                        </div>
+                    }
+                    
+
+                    @*<div class="work-experience-item">
+                        <div class="work-name">
+                            Graphic Designer
+                        </div>
+                        <div class="work-placement">
+                            Ho Chi Minh City
+                        </div>
+                        <div class="work-address">
+                            ANA Design and Development Company Ptd Lite
+                        </div>
+                    </div>
+
+                    <div class="work-experience-item">
+                        <div class="work-name">
+                            Web Designer
+                        </div>
+                        <div class="work-placement">
+                            Ho Chi Minh City
+                        </div>
+                        <div class="work-address">
+                            ANA Design and Development Company Ptd Lite
+                        </div>
+                    </div>*@
+                </div>
+            </span>
+        </div>
+
+    </div>
+</div>
+
+

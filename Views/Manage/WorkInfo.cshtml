@@ -1,0 +1,107 @@
+﻿@model WebSoftSeo.Models.WorkInfoViewModel
+
+@{
+    ViewBag.Title = "WorkInfo";
+    Layout = "~/Views/Shared/Admin/_LayoutFreelancer.cshtml";
+}
+
+@section styles{
+
+    <link href="~/Scripts/Plugins/jasny-bootstrap/css/jasny-bootstrap.min.css" rel="stylesheet" />
+}
+
+@section menus{
+    @Html.Partial("Admin/_MenuAccountInfo")
+
+}
+
+@using (Html.BeginForm("WorkInfo","Manage",FormMethod.Post,new { enctype = "multipart/form-data"}))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+        <input type="hidden" name="ImageUrl" value="@Model.ImageUrl" />
+        <div class="form-group">
+            <div class="fileinput fileinput-new col-sm-4 col-sm-offset-4" data-provides="fileinput">
+                <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                    <img data-src="" src="@Model.ImageUrl" >
+                </div>
+
+                <div class="fileinput-preview fileinput-exists thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
+                   
+                </div>
+                <div>
+                    <span class="btn btn-default btn-file">
+                        <span class="fileinput-new">Select</span>
+                        <span class="fileinput-exists">Change</span><input type="file" id="Image"  name="Image">
+                    </span>
+                    @*<a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>*@
+                </div>
+            </div>
+        </div>
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.ImageUrl, htmlAttributes: new { @class = "control-label col-sm-4" })
+            <div class="col-sm-8">
+                @Html.EditorFor(model => model.ImageUrl, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ImageUrl, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.WorkPlacement, htmlAttributes: new { @class = "control-label col-sm-4" })
+            <div class="col-sm-8">
+                @Html.EditorFor(model => model.WorkPlacement, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.WorkPlacement, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IntroduceYourself, htmlAttributes: new { @class = "control-label col-sm-4" })
+            <div class="col-sm-8">
+                @Html.EditorFor(model => model.IntroduceYourself, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.IntroduceYourself, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Skills, htmlAttributes: new { @class = "control-label col-sm-4" })
+            <div class="col-sm-8">
+                @Html.DropDownList("Skills", WebSoftSeo.Controllers.SystemInfo.MultiSelectListSkills, new { multiple = "multiple", @style = "width:100%" })
+                @*@Html.TextBoxFor(m => m.Skills, new {@class = "form-control input-sm"})*@
+                @Html.ValidationMessageFor(m => m.Skills, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-4 col-sm-8">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/Plugins/jasny-bootstrap/js/jasny-bootstrap.min.js"></script>
+
+    <script src="~/Scripts/Plugins/Choosen/chosen.jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            var listString = '@string.Join(",",Model.Skills)';
+            var listSkill = listString.split(",");
+            $.each($("select#Skills option"), function (index, e) {
+                if ($.inArray($(e).val(), listSkill) >= 0) {
+                    $(e).prop('selected', true);
+                }
+            });
+            $("#Skills").chosen({ max_selected_options: 5 });
+        });
+    </script>
+
+}
