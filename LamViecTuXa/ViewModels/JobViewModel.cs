@@ -13,12 +13,13 @@ namespace WebSoftSeo.ViewModels
         public string Description { get; set; }
 
         //public virtual ICollection<AttachedFile> Files { get; set; }
-        public HttpPostedFile[] Files { get; set; }
 
         public DateTime StartDay { get; set; }
         public DateTime EndDay { get; set; }
    
         public virtual ICollection<Skill> Skills { get; set; }
+
+        public List<Bidder> Bidders { get; set; }
 
     }
 

@@ -21,7 +21,7 @@ namespace WebSoftSeo.Models
         public int Cost { get; set; }
         public string Description { get; set; }
 
-        public virtual ICollection<AttachedFile> Files { get; set; }
+        //public virtual ICollection<AttachedFile> Files { get; set; }
 
 
         public DateTime StartDay { get; set; }
@@ -37,6 +37,7 @@ namespace WebSoftSeo.Models
 
         public DateTime CreatedOn { get; set; }
         public DateTime ModifiedOn { get; set; }
+
 
 
         public Job()

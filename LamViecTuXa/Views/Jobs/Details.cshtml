@@ -5,63 +5,47 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+    <div class="row" data-pg-collapsed>
+        <div class="col-sm-12">
+            <h3>@Model.Title</h3>
+            <div class="danhmuc">
+                <h3>Kỹ năng yêu cầu</h3>
+                <ul>
+                    @foreach(var skill in Model.Skills)
+                    {
+                        <li><a href="#">@skill.Name</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            @Model.Cost
+        </div>
+        <div class="col-sm-4">@Model.Bidders.Count Báo giá</div>
+    </div>
+    <div class="row">
+        <h1>Báo giá</h1>
+        <form role="form" method="post" action="/jobs/bid" >
+            <input type="hidden" name="JobId" value="@Model.Id" />
+            <div class="form-group">
+                <label class="control-label">Nội dung</label>
+                <textarea type="text" class="form-control"  placeholder="Nội dung báo giá" name="Description"></textarea>
+            </div>
+            <button type="submit" class="btn">Gửi</button>
+        </form>
+    </div>
+    <div class="row">
+        <h1></h1>
+        <ul class="list-group">
+            @foreach (var bid in Model.Bidders)
+            {
+                <li class="list-group-item">
+                    <h3>@bid.User.FirstName @bid.User.LastName</h3>
+                    <div>@bid.BidDay</div>
+                   
+                </li>
+            }
+            
+        </ul>
+    </div>
 
-<div>
-    <h4>Job</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Cost)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Cost)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.StartDay)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.StartDay)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EndDay)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EndDay)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

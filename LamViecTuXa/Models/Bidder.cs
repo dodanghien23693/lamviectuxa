@@ -12,6 +12,7 @@ namespace WebSoftSeo.Models
         public DateTime BidDay { get; set; }
         public virtual Job Job { get; set; }
         public bool IsChoosed { get; set; }
+        public string Description { get; set; }
         public Bidder()
         {
 

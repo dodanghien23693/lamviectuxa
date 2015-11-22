@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebSoftSeo.Models;
+using Microsoft.AspNet.Identity;
 
 namespace WebSoftSeo.Controllers
 {
@@ -62,6 +63,7 @@ namespace WebSoftSeo.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Job job = db.Jobs.Find(id);
+            
             if (job == null)
             {
                 return HttpNotFound();
@@ -206,9 +208,83 @@ namespace WebSoftSeo.Controllers
         }
 
 
+        
+        [HttpPost]
+        public ActionResult Bid(int JobId)
+        {
+            var job = db.Jobs.Find(JobId);
+            if (job != null)
+            {
+                if (Request.Form["Description"] != null)
+                {
+
+                    //job.Bidders.Add(new Bidder() { BidDay = DateTime.Now, User = SystemInfo.GetCurrentUser(), Description = Request.Form["Description"], IsChoosed = false });
+                    var bidder = new Bidder() { BidDay = DateTime.Now, Description = Request.Form["Description"], IsChoosed = false};
+                    
+                    
+                    job.Bidders.Add(bidder);
+                    db.SaveChanges();
+                    bidder.User = db.Users.Find(User.Identity.GetUserId());                    
+                    db.SaveChanges();
+                    return RedirectToAction("Details", new { id = job.Id });
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult SelectBidder(int JobId,string BidderId)
+        {
+            if (Request.IsAjaxRequest())
+            {
+                var job = db.Jobs.Find(JobId);
+                if (job != null)
+                {
+                    var bidder = job.Bidders.Where(b => b.IsChoosed == true).FirstOrDefault();
+                    if (bidder != null)
+                    {
+                        if (bidder.User.Id != BidderId)
+                        {
+                            bidder.IsChoosed = false;
+                            db.SaveChanges();
+                        }
+                        var setBidder = db.Bidders.Where(b => b.User.Id == BidderId).FirstOrDefault();
+                        if (setBidder != null)
+                        {
+                            setBidder.IsChoosed = true;
+                            db.SaveChanges();
+                            return Json(new { status = "success" });
+                        }
+                    }
+                }
+                return Json(new { status = "fail" });
+            }
+            return null;
+        }
+
+        [HttpPost]
+        public ActionResult ChangeJobStatus(int JobId, int Status)
+        {
+            if (Request.IsAjaxRequest())
+            {
+                var job = db.Jobs.Find(JobId);
+                if (job != null)
+                {
+                    if (User.Identity.GetUserId() == job.User.Id)
+                    {
+                        job.Status = Status;
+                        db.SaveChanges();
+                        return Json(new { status = "success" });
+                    }
+                }
+                return Json(new { status = "fail" });
+            }
+            return null;
+        }
 
         protected override void Dispose(bool disposing)
         {
+            
             if (disposing)
             {
                 db.Dispose();
